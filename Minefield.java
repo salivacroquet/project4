@@ -39,7 +39,7 @@ public class Minefield {
      * @param columns    Number of columns.
      * @param flags      Number of flags, should be equal to mines
      */
-    public Minefield(int rows, int columns, int flags) {
+    public Minefield(int rows, int columns, int flags) { //SYLVIA
         this.rows= rows;
         this.cols = cols;
         this.field = new Cell[rows][cols];
@@ -73,7 +73,17 @@ public class Minefield {
      * @param y        Start y, avoid placing on this square.
      * @param mines      Number of mines to place.
      */
-    public void createMines(int x, int y, int mines) {
+    public void createMines(int x, int y, int mines) { //SYLVIA
+        Random random = new Random();
+        int counter = 0;
+        while (counter < mines) {
+            int randomX = random.nextInt(rows);
+            int randomY = random.nextInt(cols);
+            if (!field[randomX][randomY].getStatus().equals("*")) {
+                field[randomX][randomY].setStatus("*");
+                counter ++;
+            }
+        }
 
     }
 
