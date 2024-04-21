@@ -58,8 +58,19 @@ public class Minefield {
      * When a mine is found check the surrounding adjacent tiles. If another mine is found during this check, increment adjacent cells status by 1.
      * 
      */
-    public void evaluateField() {
-
+    public void evaluateField() { //SYLVIA
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (field[i][j].getStatus().equals("*")) {
+                    for (int i = 0; i < rows; i++) {
+                        for (int j = 0; j < cols; j++) {
+                            if (!field[i][j].getStatus().equals("*")) {
+                                //needs work
+                            }
+                       }
+                }
+            }
+        }
     }
 
     /**
