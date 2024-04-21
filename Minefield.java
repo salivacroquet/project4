@@ -40,10 +40,15 @@ public class Minefield {
      * @param flags      Number of flags, should be equal to mines
      */
     public Minefield(int rows, int columns, int flags) {
-
-
+        this.rows= rows;
+        this.cols = cols;
+        this.field = new Cell[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++){
+                field[i][j] = new Cell(false, "");
+            }
+        }
     }
-
     /**
      * evaluateField
      * 
