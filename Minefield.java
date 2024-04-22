@@ -112,9 +112,20 @@ public class Minefield {
      * @param flag    A boolean value that allows the user to place a flag on the corresponding square.
      * @return boolean Return false if guess did not hit mine or if flag was placed, true if mine found.
      */
-    public boolean guess(int x, int y, boolean flag) {
-
-    }
+     public boolean guess ( int x, int y, boolean flag){
+            if (x < rows && y < cols) {
+                if (flag = true) {
+                    if (flagsLeft < totalFlags) { //need to find where to put these vars
+                        field[x][y].setStatus("F");
+                }
+            }   else if (field[x][y].getStatus().equals("0"))
+                    field[x][y].revealZeroes(); //fix
+                else if ((field[x][y].getStatus().equals("*")))
+                    gameOver();
+                }
+            return true;
+        }
+    
 
     /**
      * gameOver
