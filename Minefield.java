@@ -131,7 +131,7 @@ public class Minefield {
             }
             else if (flag != true) {
                  if (field[x][y].getStatus().equals("0"))
-                    revealZeroes(x, y); //fix
+                    revealZeroes(x, y); 
                 else if ((field[x][y].getStatus().equals("*")))
                     gameOver();
                 else {
