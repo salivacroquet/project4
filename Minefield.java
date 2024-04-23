@@ -29,6 +29,14 @@ public class Minefield {
      * Understand the StackGen.java class to know what type of stack you will be working with and methods you can utilize
      * Understand the QGen.java class to know what type of queue you will be working with and methods you can utilize
      */
+
+    
+    private int rows;
+    private int cols;
+    private Cell[][] field;
+    private int flagsLeft;
+    private int totalFlags;
+    
     
     /**
      * Minefield
@@ -43,6 +51,8 @@ public class Minefield {
         this.rows= rows;
         this.cols = cols;
         this.field = new Cell[rows][cols];
+        this.flagsLeft = flagsLeft;
+        this.totalFlags = totalFlags;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++){
                 field[i][j] = new Cell(false, "");
@@ -112,16 +122,21 @@ public class Minefield {
      * @param flag    A boolean value that allows the user to place a flag on the corresponding square.
      * @return boolean Return false if guess did not hit mine or if flag was placed, true if mine found.
      */
-     public boolean guess ( int x, int y, boolean flag){
+    public boolean guess ( int x, int y, boolean flag){ //SYLVIA
             if (x < rows && y < cols) {
-                if (flag = true) {
-                    if (flagsLeft < totalFlags) { //need to find where to put these vars
-                        field[x][y].setStatus("F");
+                if (flagsLeft > 0) {
+                    field[x][y].setStatus("F");
+                    flagsLeft--;
                 }
-            }   else if (field[x][y].getStatus().equals("0"))
-                    field[x][y].revealZeroes(); //fix
+            }
+            else if (flag != true) {
+                 if (field[x][y].getStatus().equals("0"))
+                    revealZeroes(x, y); //fix
                 else if ((field[x][y].getStatus().equals("*")))
                     gameOver();
+                else {
+                    field[x][y].setRevealed(true);
+                 }
                 }
             return true;
         }
