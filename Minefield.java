@@ -208,7 +208,7 @@ public class Minefield {
      * @function This method should print the entire minefield, regardless if the user has guessed a square.
      * *This method should print out when debug mode has been selected. 
      */
-    public void debug() {
+    public void debug() { //HAJAR
 
     }
 
@@ -217,7 +217,7 @@ public class Minefield {
      *
      * @return String The string that is returned only has the squares that has been revealed to the user or that the user has guessed.
      */
-    public String toString() {
+    public String toString() { //HAJAR
 
     }
 }
