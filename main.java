@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 
 public class main(String[] args) {
-int rows;
+    int rows;
     int cols;
     int mines;
     int flags;
@@ -23,8 +23,30 @@ int rows;
     System.out.println("Would you like to play Easy Mode: 1, Medium Mode: 2, or Hard Mode: 3?");
     int mode = scanner.nextInt();
     if (mode == 1) {
-        rows =
+        rows = 5;
+        cols = 5;
+        mines = 5;
+        flags = 5;
+        Minefield minefield = new Minefield(rows, cols, flags );
+        //place mines
+        //evaluate
+        //starting area
 
+    }
+    if (mode == 2) {
+        rows = 9;
+        cols = 9;
+        mines = 12;
+        flags = 12;
+        Minefield minefield = new Minefield(rows, cols, flags );
+    }
+    if (mode == 3) {
+        rows = 20;
+        cols = 20;
+        mines = 40;
+        flags = 40;
+        Minefield minefield = new Minefield(rows, cols, flags );
+    }
     while(/* ! minefield.gameOver() */ ){
     }
     
