@@ -167,7 +167,7 @@ public class Minefield {
                 }
             }
 
-            if(unRevealed == totalFlags)//if unrevealed is same as number of mines
+            if(unRevealed == totalFlags-1)//if unrevealed is same as number of mines
                 return true;
 
             //Check the case where there is
