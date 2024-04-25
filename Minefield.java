@@ -154,12 +154,23 @@ public class Minefield {
      */
     public boolean gameOver () {//HAJAR
             //Loop through the array and check if there is a mine with status=revealed
+            int unRevealed=0;
             for(int i=0; i<rows;i++){
                 for(int j=0;j<rows;j++){
+                    //if there is a mine that has been selected they lose
                     if (field[i][j].getRevealed() && field[i][j].getStatus().equals("M"))
                         return true;
+
+                    if(!field[i][j].getRevealed())
+                        unRevealed++;
+
                 }
             }
+
+            if(unRevealed == totalFlags)//if unrevealed is same as number of mines
+                return true;
+
+            //Check the case where there is
             return false;
         }
 
@@ -255,16 +266,109 @@ public class Minefield {
      * @function This method should print the entire minefield, regardless if the user has guessed a square.
      * *This method should print out when debug mode has been selected. 
      */
-    public void debug() { //HAJAR
+    public void debug() {//HAJAR
+            String board = " ";
+            for(int i=0;i<rows;i++){
+                for(int j=0;j<cols;j++){
+                    if(i==0)
+                        board= board+"  " +j;
+                    else if(j==0)
+                        board = board+"  "+i;
+                    else{
+                        switch(field[i][j].getStatus()){
+                            case "0":
+                                board = board+"  "+ ANSI_GREEN+ "0"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "1":
+                                board = board+"  "+ ANSI_BLUE_BRIGHT+ "1"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "2":
+                                board = board+"  "+ ANSI_BLUE+ "2"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "3":
+                                board = board+"  "+ ANSI_CYAN+ "3"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "4":
+                                board = board+"  "+ ANSI_PURPLE+ "4"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "5":
+                                board = board+"  "+ ANSI_YELLOW+ "5"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "6":
+                                board = board+"  "+ ANSI_YELLOW_BRIGHT+ "6"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "7":
+                                board = board+"  "+ ANSI_YELLOW_BRIGHT+ "7"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "8":
+                                board = board+"  "+ ANSI_RED+ "8"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "F":
+                                board = board+"  F";
+                                break;
+                            default:
+                                board = board+"  "+ ANSI_RED_BRIGHT+ "M"+ANSI_GREY_BACKGROUND;
+                        }
+                    }
+                }
+            }
 
-    }
+            System.out.print(board);
+        }
 
-    /**
-     * toString
-     *
-     * @return String The string that is returned only has the squares that has been revealed to the user or that the user has guessed.
-     */
-    public String toString() { //HAJAR
-
-    }
+        /**
+         * toString
+         *
+         * @return String The string that is returned only has the squares that has been revealed to the user or that the user has guessed.
+         */
+        public String toString(){//HAJAR
+            String board = " ";
+            for(int i=0;i<rows;i++){
+                for(int j=0;j<cols;j++){
+                    if(i==0)
+                        board= board+"  " +j;
+                    else if(j==0)
+                        board = board+"  "+i;
+                    else if (field[i][j].getRevealed()){
+                        switch(field[i][j].getStatus()){
+                            case "0":
+                                board = board+"  "+ ANSI_GREEN+ "0"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "1":
+                                board = board+"  "+ ANSI_BLUE_BRIGHT+ "1"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "2":
+                                board = board+"  "+ ANSI_BLUE+ "2"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "3":
+                                board = board+"  "+ ANSI_CYAN+ "3"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "4":
+                                board = board+"  "+ ANSI_PURPLE+ "4"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "5":
+                                board = board+"  "+ ANSI_YELLOW+ "5"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "6":
+                                board = board+"  "+ ANSI_YELLOW_BRIGHT+ "6"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "7":
+                                board = board+"  "+ ANSI_YELLOW_BRIGHT+ "7"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "8":
+                                board = board+"  "+ ANSI_RED+ "8"+ANSI_GREY_BACKGROUND;
+                                break;
+                            case "F":
+                                board = board+"  F";
+                                break;
+                            default:
+                                board = board+"  "+ ANSI_RED_BRIGHT+ "M"+ANSI_GREY_BACKGROUND;
+                        }
+                    }else{
+                        board = board +"  -";
+                    }
+                }
+            }
+            return board;
+        }
 }
