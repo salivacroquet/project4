@@ -4,7 +4,16 @@ Hajar Ahmed ahme0635
 
 Contributions of each partner (if working with a partner):
 Sylvia: 
+  - Minefield:
+      -Constructor
+      -evaluateField
+      -createMines
+      -guess
+      
 Hajar:
+  -Minefield:
+      -gameOver
+      
 
 How to compile and run your program:
 The program can compile and run in the terminal or through inteliJ. 
