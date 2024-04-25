@@ -175,10 +175,57 @@ public class Minefield {
      * @param x      The x value the user entered.
      * @param y      The y value the user entered.
      */
-    public void revealZeroes(int x, int y) {
-
-
-    }
+     public void revealZeroes ( int x, int y){ //SYLVIA
+           int stackSize = rows * cols;
+           int[] stackX = new int[stackSize];
+           int[] stackY = new int[stackSize];
+           int first = 0;
+           stackX[first] = x;
+           stackY[first] = y;
+           //loop through entire stack
+           while (first >= 0) {
+               int curX = stackX[first];
+               int curY = stackY[first];
+               first--;
+               //checks all neighboring cells and adds empty coords to the stack and reveals zeroes
+               if (x >= 0 && x < rows && y + 1 >= 0 && y + 1 < cols) { //right
+                   if (field[x][y].getStatus().equals("0")) {
+                       first++;
+                       stackX[first] = x;
+                       stackY[first] = y;
+                   } else {
+                       field[x][y].setRevealed(true);
+                   }
+               }
+               if (x >= 0 && x < rows && y - 1 >= 0 && y - 1 < cols) { //left
+                   if (field[x][y].getStatus().equals("0")) {
+                       first++;
+                       stackX[first] = x;
+                       stackY[first] = y;
+                   } else {
+                       field[x][y].setRevealed(true);
+                   }
+               }
+               if (x + 1 >= 0 && x + 1 < rows && y >= 0 && y < cols) { //up
+                   if (field[x][y].getStatus().equals("0")) {
+                       first++;
+                       stackX[first] = x;
+                       stackY[first] = y;
+                   } else {
+                       field[x][y].setRevealed(true);
+                   }
+               }
+               if (x - 1 >= 0 && x - 1 < rows && y >= 0 && y < cols) { //down
+                   if (field[x][y].getStatus().equals("0")) {
+                       first++;
+                       stackX[first] = x;
+                       stackY[first] = y;
+                   } else {
+                       field[x][y].setRevealed(true);
+                   }
+               }
+           }
+        }
 
     /**
      * revealStartingArea
