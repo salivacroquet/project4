@@ -51,8 +51,8 @@ public class Minefield {
         this.rows= rows;
         this.cols = cols;
         this.field = new Cell[rows][cols];
-        this.flagsLeft = flagsLeft;
-        this.totalFlags = totalFlags;
+        this.flagsLeft = flags;
+        this.totalFlags = flags;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++){
                 field[i][j] = new Cell(false, "");
@@ -77,7 +77,8 @@ public class Minefield {
                             if (!field[i][j].getStatus().equals("*")) {
                                 //needs work
                             }
-                       }
+                        }
+                    }
                 }
             }
         }
@@ -151,9 +152,17 @@ public class Minefield {
      * 
      * @return boolean Return false if game is not over and squares have yet to be revealed, otheriwse return true.
      */
-    public boolean gameOver() {
+    public boolean gameOver () {//HAJAR
+            //Loop through the array and check if there is a mine with status=revealed
+            for(int i=0; i<rows;i++){
+                for(int j=0;j<rows;j++){
+                    if (field[i][j].getRevealed() && field[i][j].getStatus().equals("M"))
+                        return true;
+                }
+            }
+            return false;
+        }
 
-    }
 
     /**
      * Reveal the cells that contain zeroes that surround the inputted cell.
