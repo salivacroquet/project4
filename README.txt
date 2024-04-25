@@ -13,6 +13,8 @@ Sylvia:
 Hajar:
   -Minefield:
       -gameOver
+      -debug
+      -toString
       
 
 How to compile and run your program:
