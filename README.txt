@@ -22,6 +22,7 @@ Hajar:
       -reveal zeros
   -main:
     -main
+    -checkInput
       
 
 How to compile and run your program:
@@ -31,13 +32,12 @@ Any assumptions:
 -Note that we DO NOT allow the player to remove flags, once they have flagged a space it
  will stay flagged for the entire game. So if they flag something that is not a mine they automatically lose.
 -we assume the user does NOT select an already revealed location
--Assumes user inputs a number when making a move.
 
 Any known bugs or defects in the program:
-None that we know of.
+-sometimes revealZeros does NOT reveal all the zeros that should be revealed
 
 Additional features that you implemented (if applicable):
-Not Applicable.
+Added a Helper function in main checkInput() that check if an input is valid (i.e. it is inbounds, a number, and the correct format)
 
 Any outside sources (aside from course resources) consulted for ideas used in the project:
 -None
