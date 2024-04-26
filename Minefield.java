@@ -196,14 +196,14 @@ public class Minefield {
                     //if there is a mine that has been selected they lose
                     if (field[i][j].getRevealed() && field[i][j].getStatus().equals("M")) {
                         mines++;
-                        if (mines > 1) {
-                            win = false;
-                            return true;
-                        }
+                    
                     }
                     if(!field[i][j].getRevealed())
                         unRevealed++;
-
+                    if (mines > 0) {
+                    win = false;
+                    return true;
+                        }    
                 }
             }
 
