@@ -44,6 +44,12 @@ public class Main {
         }
         minefield = new Minefield(rows, cols, flags);
 
+        System.out.println("What is your initial pick? (x y ): ");
+        int x = scanner.nextInt();
+        int y = scanner.nextInt();
+        minefield.revealStartingArea(x, y);
+        System.out.println(minefield.toString());
+
         while (!minefield.gameOver()) {
             //prints game
             System.out.println(minefield);
