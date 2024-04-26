@@ -155,11 +155,14 @@ public class Minefield {
     public boolean gameOver () {//HAJAR
             //Loop through the array and check if there is a mine with status=revealed
             int unRevealed=0;
+            int mines=0;
             for(int i=0; i<rows;i++){
                 for(int j=0;j<rows;j++){
                     //if there is a mine that has been selected they lose
                     if (field[i][j].getRevealed() && field[i][j].getStatus().equals("M"))
-                        return true;
+                        mines++;
+                        if(mines>1)
+                            return true;
 
                     if(!field[i][j].getRevealed())
                         unRevealed++;
