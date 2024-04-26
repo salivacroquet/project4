@@ -346,13 +346,13 @@ public class Minefield {
                     if(currentX+1< rows && !field[currentX+1][currentY].getRevealed()){
                         int[] bottomCell = new int[]{currentX+1,currentY};
                         startArea.add(bottomCell);
-                    }if(currentX-1> 0 && !field[currentX-1][currentY].getRevealed()){
+                    }if(currentX-1>= 0 && !field[currentX-1][currentY].getRevealed()){
                         int[] topCell = new int[]{currentX-1,currentY};
                         startArea.add(topCell);
                     }if(currentY+1< cols && !field[currentX][currentY+1].getRevealed()){
                         int[] rightCell = new int[]{currentX,currentY+1};
                         startArea.add(rightCell);
-                    }if(currentY-1>0 && !field[currentX][currentY-1].getRevealed()){
+                    }if(currentY-1>=0 && !field[currentX][currentY-1].getRevealed()){
                         int[] leftCell = new int[]{currentX,currentY-1};
                         startArea.add(leftCell);
                     }
