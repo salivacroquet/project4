@@ -65,12 +65,12 @@ public class main{
             debug=false;
         }
 
-        System.out.println("What is your first move? [x],[y] :");
+        System.out.println("What is your first move? [x],[y]:");
         String input = scanner.next();
         String[] firstMove = input.split(",");
-        while(firstMove.length!=2 && Integer.parseInt(firstMove[0])<0 &&
-                Integer.parseInt(firstMove[0])>rows &&
-                Integer.parseInt(firstMove[1])<0 &&
+        while(firstMove.length!=2 || Integer.parseInt(firstMove[0])<0 ||
+                Integer.parseInt(firstMove[0])>rows ||
+                Integer.parseInt(firstMove[1])<0 ||
                 Integer.parseInt(firstMove[1])>cols){
             System.out.println("Not a valid input.");
             System.out.println("What is your first move? [x],[y] :");
@@ -98,9 +98,9 @@ public class main{
             System.out.println("What is your move? [x],[y],[flag:1 OR reveal:0] ");
             input = scanner.next();
             String[] move = input.split(",");
-            while(move.length!=3 && Integer.parseInt(move[0])<0 && Integer.parseInt(move[0])>rows &&
-                    Integer.parseInt(move[1])<0 && Integer.parseInt(move[1])>cols &&
-                    Integer.parseInt(move[2]) != 0 && Integer.parseInt(move[2]) != 1){
+            while(move.length!=3 || Integer.parseInt(move[0])<0 || Integer.parseInt(move[0])>rows ||
+                    Integer.parseInt(move[1])<0 || Integer.parseInt(move[1])>cols ||
+                    Integer.parseInt(move[2]) != 0 || Integer.parseInt(move[2]) != 1){
 
                 System.out.println("Not a valid input.");
                 System.out.println("What is your move? [x] [y] [flag:1 OR reveal:0] ");
