@@ -59,6 +59,8 @@ public class main{
 
         }if(output.equals("yes")){
             minefield.debug();
+            System.out.println(" ");
+            System.out.println(minefield);
             debug=true;
         }else if(output.equals("no")){
             System.out.println(minefield);
@@ -90,6 +92,8 @@ public class main{
             //print the game
             if(debug){
                 minefield.debug();
+                System.out.println(" ");
+                System.out.println(minefield);
             }else{
                 System.out.println(minefield);
             }
@@ -100,10 +104,11 @@ public class main{
             String[] move = input.split(",");
             while(move.length!=3 || Integer.parseInt(move[0])<0 || Integer.parseInt(move[0])>rows ||
                     Integer.parseInt(move[1])<0 || Integer.parseInt(move[1])>cols ||
-                    Integer.parseInt(move[2]) != 0 || Integer.parseInt(move[2]) != 1){
+                    (Integer.parseInt(move[2]) != 0 && Integer.parseInt(move[2]) != 1)){
 
                 System.out.println("Not a valid input.");
                 System.out.println("What is your move? [x] [y] [flag:1 OR reveal:0] ");
+                input = scanner.next();
                 move = input.split(",");
             }
 
