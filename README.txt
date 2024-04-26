@@ -29,7 +29,7 @@ The program can compile and run in the terminal or through inteliJ.
 
 Any assumptions:
 -Note that we DO NOT allow the player to remove flags, once they have flagged a space it
- will stay flagged for the entire game. So if they flag something that is not a mine they automatically lose
+ will stay flagged for the entire game. So if they flag something that is not a mine they automatically lose.
 
 Any known bugs or defects in the program:
 None that we know of.
