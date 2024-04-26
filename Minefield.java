@@ -37,6 +37,7 @@ public class Minefield {
     private int flagsLeft; //keeps track of number of flags available for use
     private int totalFlags; //number of flags (equal to number of mines)
 
+    private boolean win; //keeps track if player wins or loses
 
     /**
      * Minefield
@@ -158,46 +159,23 @@ public class Minefield {
          * @param flag    A boolean value that allows the user to place a flag on the corresponding square.
          * @return boolean Return false if guess did not hit mine or if flag was placed, true if mine found.
          */
-            public boolean guess ( int x, int y, boolean flag){ //SYLVIA
-        if (x < rows && x>0 && y>0 && y < cols) {
-            if (flag == true) {
+        public boolean guess ( int x, int y, boolean flag){ //SYLVIA
+            if (x < rows && x>0 && y>0 && y < cols) {
                 if (flagsLeft > 0) {
                     field[x][y].setStatus("F");
                     flagsLeft--;
-                    return false;
                 }
-                if (field[x][y].getStatus().equals("F")) {
-                    System.out.println("Already a flag there");
-                    return false;
-                }
-                if (field[x][y].getRevealed()) {
-                    System.out.println("Cell already revealed");
-                    return false;
-                } else {
-                    System.out.println("No flags left");
-                }
-
-            } else {
-                if (field[x][y].getRevealed()) {
-                    System.out.println("Cell already revealed");
-                    return false;
-                }
-                if (field[x][y].getStatus().equals("*")) {
-                    gameOver();
-                    return true;
-                }
-                else if (field[x][y].getStatus().equals("0")) {
+            } else if (flag != true) {
+                if (field[x][y].getStatus().equals("0"))
                     revealZeroes(x, y);
-                }
+                else if ((field[x][y].getStatus().equals("M")))
+                    gameOver();
                 else {
                     field[x][y].setRevealed(true);
                 }
-                return false;
-
             }
+            return true;
         }
-        return false;
-    }
 
 
         /**
@@ -216,19 +194,23 @@ public class Minefield {
             for(int i=0; i<rows;i++){
                 for(int j=0;j<rows;j++){
                     //if there is a mine that has been selected they lose
-                    if (field[i][j].getRevealed() && field[i][j].getStatus().equals("M"))
+                    if (field[i][j].getRevealed() && field[i][j].getStatus().equals("M")) {
                         mines++;
-                        if(mines>1)
+                        if (mines > 1) {
+                            win = false;
                             return true;
-
+                        }
+                    }
                     if(!field[i][j].getRevealed())
                         unRevealed++;
 
                 }
             }
 
-            if(unRevealed == totalFlags)//if unrevealed is same as number of mines
+            if(unRevealed == totalFlags) {//if unrevealed is same as number of mines
+                win = true;
                 return true;
+            }
 
             //Check the case where there is
             return false;
@@ -432,18 +414,21 @@ public class Minefield {
                             case "8":
                                 board = board+"  "+ ANSI_RED+ "8"+ANSI_GREY_BACKGROUND;
                                 break;
-                            case "F":
-                                board = board+"  F";
-                                break;
                             default:
                                 board = board+"  "+ ANSI_GREEN+ "0"+ANSI_GREY_BACKGROUND;
                         }
-                    }else{
+                    }else if(field[i][j].getStatus().equals("F")){
+                        board = board+"  F";
+                    } else{
                         board = board +"  -";
                     }
                 }
                 board=board+"\n";
             }
             return board;
+        }
+
+        public boolean getWin(){
+            return win;
         }
 }
