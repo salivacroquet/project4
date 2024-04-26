@@ -29,7 +29,8 @@ public class main{
             System.out.println("Not a valid input.");
             System.out.println("Would you like to play Easy Mode: 1, Medium Mode: 2, or Hard Mode: 3?");
             mode = scanner.nextInt();
-        }//sets size for each mode
+            //sets size for each mode
+        }
         if (mode == 1) {//easy
             rows = 5;
             cols = 5;
@@ -64,7 +65,7 @@ public class main{
             debug=false;
         }
 
-        System.out.println("What is your first move? x,y :");
+        System.out.println("What is your first move? [x],[y] :");
         String input = scanner.next();
         String[] firstMove = input.split(",");
         while(firstMove.length!=2 && Integer.parseInt(firstMove[0])<0 &&
@@ -72,7 +73,7 @@ public class main{
                 Integer.parseInt(firstMove[1])<0 &&
                 Integer.parseInt(firstMove[1])>cols){
             System.out.println("Not a valid input.");
-            System.out.println("What is your first move? x,y :");
+            System.out.println("What is your first move? [x],[y] :");
             input = scanner.next();
             firstMove = input.split(",");
         }
@@ -81,9 +82,10 @@ public class main{
 
         minefield.createMines(firstX,firstY,mines);
         minefield.evaluateField();
-        minefield.debug();
         minefield.revealStartingArea(firstX,firstY);
         System.out.println(" ");
+
+
         while (!minefield.gameOver()) {
             //print the game
             if(debug){
@@ -93,23 +95,36 @@ public class main{
             }
 
             //asks for input
-            System.out.println("What is your move? (x y flag/reveal): ");
-            int x = scanner.nextInt();
-            int y = scanner.nextInt();
-            String choice = scanner.next();
-            if (choice.equals("flag") || choice.equals("Flag")) {
+            System.out.println("What is your move? [x],[y],[flag:1 OR reveal:0] ");
+            input = scanner.next();
+            String[] move = input.split(",");
+            while(move.length!=3 && Integer.parseInt(move[0])<0 && Integer.parseInt(move[0])>rows &&
+                    Integer.parseInt(move[1])<0 && Integer.parseInt(move[1])>cols &&
+                    Integer.parseInt(move[2]) != 0 && Integer.parseInt(move[2]) != 1){
+
+                System.out.println("Not a valid input.");
+                System.out.println("What is your move? [x] [y] [flag:1 OR reveal:0] ");
+                move = input.split(",");
+            }
+
+            int x= Integer.parseInt(move[0]);
+            int y= Integer.parseInt(move[1]);
+            int choice = Integer.parseInt(move[2]);
+
+            if (choice==1) {
                 minefield.guess(x, y, true);
             }
-            else if (choice.equals("reveal") || choice.equals("Reveal")) {
+            else if (choice==0) {
                 minefield.guess(x, y, false);
-            } else {
-                System.out.println("Not a valid input.");
             }
         }
-        System.out.println("Game Over");
-        //determine if user hit a mine or won
-        //need to verify debug too
 
+        System.out.println("Game Over");
+        if(minefield.getWin()){
+            System.out.println("You Won!");
+        }else{
+            System.out.println("You Lost!");
+        }
 
     }
 
