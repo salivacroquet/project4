@@ -251,7 +251,7 @@ public class Minefield {
                     int[] rightCell = new int[]{currentX,currentY+1};
                     zeros.push(rightCell);
                 }if(currentY-1>=0 && !field[currentX][currentY-1].getRevealed() &&
-                        field[currentX][currentY+1].getStatus().equals("0")){
+                        field[currentX][currentY-1].getStatus().equals("0")){
                     int[] leftCell = new int[]{currentX,currentY-1};
                     zeros.push(leftCell);
                 }
