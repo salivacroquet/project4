@@ -1,3 +1,5 @@
+//Created by Sylvia Croatt, croat038 and Hajar Ahmed, ahme0635
+
 //Import Section
 import java.util.Scanner;
 
