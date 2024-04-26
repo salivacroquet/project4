@@ -51,12 +51,19 @@ public class Main {
         System.out.println(minefield.toString());
 
         while (!minefield.gameOver()) {
-            //prints game
-            System.out.println(minefield);
+            System.out.println("Would you like to play in debug mode?: ");
+            String debugChoice = scanner.next();
+            if (debugChoice.equals("yes") || debugChoice.equals("Yes")) {
+                minefield.debug();
+            } else {
+                //prints game
+                System.out.println(minefield.toString());
+            }
+
             //asks for input
             System.out.println("What is your move? (x y flag/reveal): ");
-            int x = scanner.nextInt();
-            int y = scanner.nextInt();
+            x = scanner.nextInt();
+            y = scanner.nextInt();
             String choice = scanner.next();
 
             if (choice.equals("flag") || choice.equals("Flag")) {
@@ -69,12 +76,8 @@ public class Main {
             }
         }
 
-       System.out.println("Game Over.");
+        System.out.println("Game Over.");
             minefield.gameOver();
-
-
     }
 }
 
-    }
-}
