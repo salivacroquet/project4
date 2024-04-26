@@ -160,7 +160,7 @@ public class Minefield {
          * @return boolean Return false if guess did not hit mine or if flag was placed, true if mine found.
          */
         public boolean guess ( int x, int y, boolean flag){ //SYLVIA
-        if (x < rows && x>0 && y>0 && y < cols) {
+         if (x < rows && x>=0 && y>=0 && y < cols) {
             if (flag == true) {
                 if (flagsLeft > 0) {
                     field[x][y].setStatus("F");
