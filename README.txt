@@ -37,10 +37,10 @@ Any known bugs or defects in the program:
 -sometimes revealZeros does NOT reveal all the zeros that should be revealed
 
 Additional features that you implemented (if applicable):
-Added a Helper function in main checkInput() that check if an input is valid (i.e. it is inbounds, a number, and the correct format)
+Added a Helper function in main checkInput() that checks if an input is valid (i.e. it is inbounds, a number, and the correct format)
 
 Any outside sources (aside from course resources) consulted for ideas used in the project:
--None
+-NumberFormatException: https://stackoverflow.com/questions/19149784/java-java-lang-numberformatexception
 
 I certify that the information contained in this README
 file is complete and accurate. I have both read and followed the course policies
