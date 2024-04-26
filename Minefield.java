@@ -158,23 +158,46 @@ public class Minefield {
          * @param flag    A boolean value that allows the user to place a flag on the corresponding square.
          * @return boolean Return false if guess did not hit mine or if flag was placed, true if mine found.
          */
-        public boolean guess ( int x, int y, boolean flag){ //SYLVIA
-            if (x < rows && x>0 && y>0 && y < cols) {
+            public boolean guess ( int x, int y, boolean flag){ //SYLVIA
+        if (x < rows && x>0 && y>0 && y < cols) {
+            if (flag == true) {
                 if (flagsLeft > 0) {
                     field[x][y].setStatus("F");
                     flagsLeft--;
+                    return false;
                 }
-            } else if (flag != true) {
-                if (field[x][y].getStatus().equals("0"))
-                    revealZeroes(x, y);
-                else if ((field[x][y].getStatus().equals("M")))
+                if (field[x][y].getStatus().equals("F")) {
+                    System.out.println("Already a flag there");
+                    return false;
+                }
+                if (field[x][y].getRevealed()) {
+                    System.out.println("Cell already revealed");
+                    return false;
+                } else {
+                    System.out.println("No flags left");
+                }
+
+            } else {
+                if (field[x][y].getRevealed()) {
+                    System.out.println("Cell already revealed");
+                    return false;
+                }
+                if (field[x][y].getStatus().equals("*")) {
                     gameOver();
+                    return true;
+                }
+                else if (field[x][y].getStatus().equals("0")) {
+                    revealZeroes(x, y);
+                }
                 else {
                     field[x][y].setRevealed(true);
                 }
+                return false;
+
             }
-            return true;
         }
+        return false;
+    }
 
 
         /**
