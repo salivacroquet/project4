@@ -35,7 +35,9 @@ public class Minefield {
     private int cols; //number of columns
     private Cell[][] field; //2D array representing the minefield
     private int flagsLeft; //keeps track of number of flags available for use
-    private int totalFlags; //number of flags (equal to number of mines)
+    private int totalFlags; //Total number of flags (equal to number of mines)
+
+    private boolean valid;// a boolean that is true if a move made is valid
 
 
     private boolean win; //keeps track if player wins or loses
@@ -50,12 +52,14 @@ public class Minefield {
      * @param columns Number of columns.
      * @param flags   Number of flags, should be equal to mines
      */
-    public Minefield(int rows, int columns, int flags) { //SYLVIA
+    public Minefield(int rows, int columns, int flags) {
         this.rows = rows;
         this.cols = columns;
+        //Create the board according to the given rows and columns
         this.field = new Cell[rows][columns];
         this.flagsLeft = flags;
         this.totalFlags = flags;
+        //Set every cell to status 0 and revealed=false
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 field[i][j] = new Cell(false, "0");
@@ -69,49 +73,54 @@ public class Minefield {
      * @function: Evaluate entire array.
      * When a mine is found check the surrounding adjacent tiles. If another mine is found during this check, increment adjacent cells status by 1.
      */
-    public void evaluateField() { //SYLVIA
+    public void evaluateField() {
+        //loop through the entire minefield to find each mine
         for(int i=0; i<rows;i++){
             for(int j=0; j<rows;j++){
-                if(field[i][j].getStatus().equals("M")){
+                if(field[i][j].getStatus().equals("M")){//if the cell is a mine:
                     String oldStatus="";
                     int adjacentMines=0;
-                    //Check all 8 adjacent tiles and increment by one if not a mine
-                    if(i+1<rows && !field[i+1][j].getStatus().equals("M")){
+                    //Check all 8 adjacent tiles and increment by one if the adjacent cell is NOT a mine
+                    if(i+1<rows && !field[i+1][j].getStatus().equals("M")){ //bottom cell
+                        //get its status
                         oldStatus=field[i+1][j].getStatus();
+                        //convert it to an int
                         adjacentMines= Integer.parseInt(oldStatus);
+                        //increment its status
                         adjacentMines++;
+                        //convert the status back to a String and set status to be the new status
                         field[i+1][j].setStatus(Integer.toString(adjacentMines));
-                    }if(i-1>=0 && !field[i-1][j].getStatus().equals("M")){
+                    }if(i-1>=0 && !field[i-1][j].getStatus().equals("M")){//top cell
                         oldStatus=field[i-1][j].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
                         field[i-1][j].setStatus(Integer.toString(adjacentMines));
-                    }if(j+1<cols && !field[i][j+1].getStatus().equals("M")){
+                    }if(j+1<cols && !field[i][j+1].getStatus().equals("M")){//right cell
                         oldStatus=field[i][j+1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
                         field[i][j+1].setStatus(Integer.toString(adjacentMines));
-                    }if(j-1>=0 && !field[i][j-1].getStatus().equals("M")){
+                    }if(j-1>=0 && !field[i][j-1].getStatus().equals("M")){//left cell
                         oldStatus=field[i][j-1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
                         field[i][j-1].setStatus(Integer.toString(adjacentMines));
-                    }if(j-1>=0 && i-1>=0 && !field[i-1][j-1].getStatus().equals("M")){
+                    }if(j-1>=0 && i-1>=0 && !field[i-1][j-1].getStatus().equals("M")){//upper left cell
                         oldStatus=field[i-1][j-1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
                         field[i-1][j-1].setStatus(Integer.toString(adjacentMines));
-                    }if(j+1<cols && i-1>=0 && !field[i-1][j+1].getStatus().equals("M")){
+                    }if(j+1<cols && i-1>=0 && !field[i-1][j+1].getStatus().equals("M")){//upper right cell
                         oldStatus=field[i-1][j+1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
                         field[i-1][j+1].setStatus(Integer.toString(adjacentMines));
-                    }if(j-1>=0 && i+1<rows && !field[i+1][j-1].getStatus().equals("M")){
+                    }if(j-1>=0 && i+1<rows && !field[i+1][j-1].getStatus().equals("M")){//lower left cell
                         oldStatus=field[i+1][j-1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
                         field[i+1][j-1].setStatus(Integer.toString(adjacentMines));
-                    }if(j+1<cols && i+1<rows && !field[i+1][j+1].getStatus().equals("M")){
+                    }if(j+1<cols && i+1<rows && !field[i+1][j+1].getStatus().equals("M")){//lower right cell
                         oldStatus=field[i+1][j+1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
@@ -133,13 +142,17 @@ public class Minefield {
          * @param y        Start y, avoid placing on this square.
          * @param mines      Number of mines to place.
          */
-        public void createMines ( int x, int y, int mines){ //SYLVIA
+        public void createMines ( int x, int y, int mines){
             Random random = new Random();
-            int counter = 0;
+            int counter = 0; //counts how many mines have been created
+            //create the designated amount of random mines
             while (counter < mines) {
+                //create random coordinates for the new mine
                 int randomX = random.nextInt(rows);
                 int randomY = random.nextInt(cols);
+                //if there is no mine in the random position and the random position is not  on (x,y):
                 if (!field[randomX][randomY].getStatus().equals("M") && randomX!=x && randomY!=y) {
+                    //make that postion a mine
                     field[randomX][randomY].setStatus("M");
                     counter++;
                 }
@@ -160,22 +173,41 @@ public class Minefield {
          * @param flag    A boolean value that allows the user to place a flag on the corresponding square.
          * @return boolean Return false if guess did not hit mine or if flag was placed, true if mine found.
          */
-        public boolean guess ( int x, int y, boolean flag){ //SYLVIA
-            if (flagsLeft > 0 && flag && !field[x][y].getRevealed()) {
+        public boolean guess ( int x, int y, boolean flag){
+            valid=true;//assume the move is valid until proven otherwise
+            //if there are flags left and that the guessed cell is not revealed:
+            if (flagsLeft > 0 && flag && !field[x][y].getRevealed() &&
+                    !field[x][y].getStatus().equals("F")) {
+                //place a flag there
                 field[x][y].setStatus("F");
+                //subtract a flag from flagsLeft
                 flagsLeft--;
+                return false;
             }
-            if (flag != true) {
-                if (field[x][y].getStatus().equals("0"))
+            if (flag != true) {//if they are not placing a flag
+                if (field[x][y].getStatus().equals("0")) {//check if the postion entered is 0:
+                    //if so reveal the surrounding zeros
                     revealZeroes(x, y);
-                else if ((field[x][y].getStatus().equals("M"))) {
+                    return false;
+                }else if ((field[x][y].getStatus().equals("M"))) {//check if the positon is a mine
+                    //if so then reveal the mine and end the game
                     field[x][y].setRevealed(true);
                     gameOver();
-                }else{
+                    return true;//since a mine was found we return true
+                }else if(field[x][y].getStatus().equals("F")){//if the position has a flag on it
+                    //the move is invalid
+                    valid=false;
+                    return false;
+                }else if(!field[x][y].getRevealed()){//if the position is unrevealed and does NOT have a flag
+                    //reveal the cell
                     field[x][y].setRevealed(true);
+                    return false;
+                }else{//otherwise the move is invalid
+                    valid=false;
+                    return false;
                 }
             }
-            return true;
+            return false;
         }
 
 
@@ -189,32 +221,37 @@ public class Minefield {
          * @return boolean Return false if game is not over and squares have yet to be revealed, otheriwse return true.
          */
         //FIX
-        public boolean gameOver () {//HAJAR
+        public boolean gameOver () {
             //Loop through the array and check if there is a mine with status=revealed
-            int unRevealed=0;
-            int mines=0;
+            int unRevealed=0; //keeps track of the number of unrevealed cells
+            int mines=0; //keeps track of the number of revealed mines
             for(int i=0; i<rows;i++){
                 for(int j=0;j<rows;j++){
-                    //if there is a mine that has been selected they lose
+                    //if there is a mine that has been revealed:
                     if (field[i][j].getRevealed() && field[i][j].getStatus().equals("M")) {
-                        mines++;
+                        mines++;//increment number of revealed mines
                         if (mines > 1) {
+                            //if there is at least 2 mines that are revealed they lose
+                            //(keep in mind that the first mine is revealed for free to the player)
                             win = false;
                             return true;
                         }
                     }
+                    //count the number of unrevealed cells
                     if(!field[i][j].getRevealed())
                         unRevealed++;
 
                 }
             }
-
-            if(unRevealed == totalFlags) {//if unrevealed is same as number of mines
+            
+            
+            if(unRevealed == totalFlags-1) {//if unrevealed is same as number of mines
+                //they won the game
                 win = true;
                 return true;
             }
 
-            //Check the case where there is
+            //otherwise the game is not over
             return false;
         }
 
@@ -229,35 +266,44 @@ public class Minefield {
          * @param x      The x value the user entered.
          * @param y      The y value the user entered.
          */
-        public void revealZeroes ( int x, int y){ //SYLVIA
+        public void revealZeroes ( int x, int y){ 
+            //initialize a generic stack and add the first position
             Stack1Gen<int[]> zeros = new Stack1Gen<>();
             int[] coordinates = new int[]{x,y};
             zeros.push(coordinates);
 
-            while(!zeros.isEmpty()){
+            while(!zeros.isEmpty()){//while the stack has something in it
+                //push the top item in the stack
                 int[] newCoordinates= zeros.pop();
                 int currentX= newCoordinates[0];
                 int currentY=newCoordinates[1];
+                
+                //reveal the current cell
+                field[currentX][currentY].setRevealed(true);
 
-
+                //check if adjacent cells to the stack are in bounds, unrevealed, and if they are "0",
+                //if so put that cells  position into the stack
                 if(currentX+1< rows && !field[currentX+1][currentY].getRevealed() &&
-                        field[currentX+1][currentY].getStatus().equals("0")){
+                        field[currentX+1][currentY].getStatus().equals("0")){//bottom cell
+                    //create an int array for the position of the cell and add it to the stack
                     int[] bottomCell = new int[]{currentX+1,currentY};
                     zeros.push(bottomCell);
                 }if(currentX-1>= 0 && !field[currentX-1][currentY].getRevealed() &&
-                        field[currentX-1][currentY].getStatus().equals("0")){
+                        field[currentX-1][currentY].getStatus().equals("0")){//top cell
+                    //create an int array for the position of the cell and add it to the stack
                     int[] topCell = new int[]{currentX-1,currentY};
                     zeros.push(topCell);
                 }if(currentY+1< cols && !field[currentX][currentY+1].getRevealed() &&
-                        field[currentX][currentY+1].getStatus().equals("0")){
+                        field[currentX][currentY+1].getStatus().equals("0")){//right cell
+                    //create an int array for the position of the cell and add it to the stack
                     int[] rightCell = new int[]{currentX,currentY+1};
                     zeros.push(rightCell);
                 }if(currentY-1>=0 && !field[currentX][currentY-1].getRevealed() &&
-                        field[currentX][currentY-1].getStatus().equals("0")){
+                        field[currentX][currentY-1].getStatus().equals("0")){//left cell
+                    //create an int array for the position of the cell and add it to the stack
                     int[] leftCell = new int[]{currentX,currentY-1};
                     zeros.push(leftCell);
                 }
-                field[currentX][currentY].setRevealed(true);
             }
         }
 
@@ -274,33 +320,43 @@ public class Minefield {
          * @param y     The y value the user entered.
          */
         public void revealStartingArea ( int x, int y){
-            //Create queue
+            //Initialize a generic queue and add the first position
             Q1Gen<int[]> startArea = new Q1Gen<>();
             int[] coordinates = new int[]{x,y};
             startArea.add(coordinates);
 
+            //while the queue has something in it
             while(startArea.length() != 0){
+                //remove the first position in the queue
                 int[] newCoordinates= startArea.remove();
                 int currentX= newCoordinates[0];
                 int currentY=newCoordinates[1];
 
+                //reveal the current cell
                 Cell currentCell = field[currentX][currentY];
                 currentCell.setRevealed(true);
-
+                
+                //if the current cell is a mine exit the loop
                 if(currentCell.getStatus().equals("M")) {
+                    //remove one flag since one mine has been revealed for free
                     flagsLeft--;
                     break;
-                }else{
-                    if(currentX+1< rows && !field[currentX+1][currentY].getRevealed()){
+                }else{//otherwise check adjacent cells 
+                    // if they are in bounds and unrevealed add them to the queue
+                    if(currentX+1< rows && !field[currentX+1][currentY].getRevealed()){//bottom cell
+                        //create an int array of the position of the adjacent cell and add it to the queue
                         int[] bottomCell = new int[]{currentX+1,currentY};
                         startArea.add(bottomCell);
-                    }if(currentX-1>= 0 && !field[currentX-1][currentY].getRevealed()){
+                    }if(currentX-1>= 0 && !field[currentX-1][currentY].getRevealed()){//top cell
+                        //create an int array of the position of the adjacent cell and add it to the queue
                         int[] topCell = new int[]{currentX-1,currentY};
                         startArea.add(topCell);
-                    }if(currentY+1< cols && !field[currentX][currentY+1].getRevealed()){
+                    }if(currentY+1< cols && !field[currentX][currentY+1].getRevealed()){//right cell
+                        //create an int array of the position of the adjacent cell and add it to the queue
                         int[] rightCell = new int[]{currentX,currentY+1};
                         startArea.add(rightCell);
-                    }if(currentY-1>=0 && !field[currentX][currentY-1].getRevealed()){
+                    }if(currentY-1>=0 && !field[currentX][currentY-1].getRevealed()){//left cell
+                        //create an int array of the position of the adjacent cell and add it to the queue
                         int[] leftCell = new int[]{currentX,currentY-1};
                         startArea.add(leftCell);
                     }
@@ -321,16 +377,23 @@ public class Minefield {
          * @function This method should print the entire minefield, regardless if the user has guessed a square.
          * *This method should print out when debug mode has been selected.
          */
-        public void debug() {//HAJAR
+        public void debug() {
+            //create a string representing the entire board
             String board = "   ";
+            //for the first row, add the column numbers from 0-cols
             for(int i=0;i<cols;i++){
                 board=board+"  "+i;
             }
-            board = board+"\n";
+            board = board+"\n";//add a new line after the first row
+            
+            //loop through the entire board
             for(int i=0;i<rows;i++){
                 for(int j=0;j<cols;j++){
+                    //for the first column, add the row numbers from 0-rows
                     if(j==0)
                         board = board+"  "+i;
+                    //if it is NOT the first row or first column check the status of the cell
+                    //and print it in a specific color
                     switch(field[i][j].getStatus()){
                         case "M":
                             board = board+"  "+ ANSI_RED_BRIGHT+ "M"+ANSI_GREY_BACKGROUND;
@@ -362,13 +425,15 @@ public class Minefield {
                         case "F":
                             board = board+"  F";
                             break;
-                        default:
+                        default://if the board is empty the entire board will be filled with green zeros
                             board = board+"  "+ ANSI_GREEN+ "0"+ANSI_GREY_BACKGROUND;
                     }
                 }
+                //add a newline after each row
                 board=board+"\n";
             }
-
+            
+            //print the board
             System.out.print(board);
         }
 
@@ -377,16 +442,24 @@ public class Minefield {
          *
          * @return String The string that is returned only has the squares that has been revealed to the user or that the user has guessed.
          */
-        public String toString(){//HAJAR
+        public String toString(){
+            //create a string representing the entire board
             String board = "   ";
+            //for the first row, add the column numbers from 0-cols
             for(int i=0;i<cols;i++){
                 board=board+"  "+i;
             }
-            board=board+"\n";
+            board=board+"\n";//add a new line after the first row
+
+            //loop through the entire board
             for(int i=0;i<rows;i++){
                 for(int j=0;j<cols;j++){
+                    //for the first column, add the row numbers from 0-rows
                     if(j==0)
                         board = board+"  "+i;
+
+                    //if it is NOT the first row or first column AND the cell is revealed OR the cell is flagged
+                    //print the cell's status in a specific color
                     if (field[i][j].getRevealed()|| field[i][j].getStatus()=="F"){
                         switch(field[i][j].getStatus()){
                             case "M":
@@ -422,17 +495,24 @@ public class Minefield {
                             default:
                                 board = board+"  "+ ANSI_GREEN+ "0"+ANSI_GREY_BACKGROUND;
                         }
-                    } else{
+                    } else{//if the cell is unrevealed use the placeholder "-"
                         board = board +"  -";
                     }
                 }
+                //add a new line at the end of each row
                 board=board+"\n";
             }
             return board;
         }
 
+        //A getter that returns the variable win
         public boolean getWin(){
             return win;
         }
         
+        //A getter that returns the variable valid
+        public boolean getValid(){
+            return valid;
+        }
+
 }
