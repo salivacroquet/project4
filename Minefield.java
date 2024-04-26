@@ -187,55 +187,86 @@ public class Minefield {
      * @param y      The y value the user entered.
      */
      public void revealZeroes ( int x, int y){ //SYLVIA
-           int stackSize = rows * cols;
-           int[] stackX = new int[stackSize];
-           int[] stackY = new int[stackSize];
-           int first = 0;
-           stackX[first] = x;
-           stackY[first] = y;
-           //loop through entire stack
-           while (first >= 0) {
-               int curX = stackX[first];
-               int curY = stackY[first];
-               first--;
-               //checks all neighboring cells and adds empty coords to the stack and reveals zeroes
-               if (x >= 0 && x < rows && y + 1 >= 0 && y + 1 < cols) { //right
-                   if (field[x][y].getStatus().equals("0")) {
-                       first++;
-                       stackX[first] = x;
-                       stackY[first] = y;
-                   } else {
-                       field[x][y].setRevealed(true);
-                   }
-               }
-               if (x >= 0 && x < rows && y - 1 >= 0 && y - 1 < cols) { //left
-                   if (field[x][y].getStatus().equals("0")) {
-                       first++;
-                       stackX[first] = x;
-                       stackY[first] = y;
-                   } else {
-                       field[x][y].setRevealed(true);
-                   }
-               }
-               if (x + 1 >= 0 && x + 1 < rows && y >= 0 && y < cols) { //up
-                   if (field[x][y].getStatus().equals("0")) {
-                       first++;
-                       stackX[first] = x;
-                       stackY[first] = y;
-                   } else {
-                       field[x][y].setRevealed(true);
-                   }
-               }
-               if (x - 1 >= 0 && x - 1 < rows && y >= 0 && y < cols) { //down
-                   if (field[x][y].getStatus().equals("0")) {
-                       first++;
-                       stackX[first] = x;
-                       stackY[first] = y;
-                   } else {
-                       field[x][y].setRevealed(true);
-                   }
-               }
-           }
+         //I think we need to use the generic stack provided
+         //here is some code I made using the generic stack
+         Stack1Gen<int[]> zeros = new Stack1Gen<>();
+            int[] coordinates = new int[]{x,y};
+            zeros.push(coordinates);
+
+            while(!zeros.isEmpty()){
+                int[] newCoordinates= zeros.pop();
+                int currentX= newCoordinates[0];
+                int currentY=newCoordinates[1];
+
+
+                if(currentX+1< rows && !field[currentX+1][currentY].getRevealed() &&
+                        field[currentX+1][currentY].getStatus().equals("0")){
+                    int[] bottomCell = new int[]{currentX+1,currentY};
+                    zeros.push(bottomCell);
+                }if(currentX-1> 0 && !field[currentX-1][currentY].getRevealed() &&
+                        field[currentX+1][currentY].getStatus().equals("0")){
+                    int[] topCell = new int[]{currentX-1,currentY};
+                    zeros.push(topCell);
+                }if(currentY+1< cols && !field[currentX][currentY+1].getRevealed() &&
+                        field[currentX+1][currentY].getStatus().equals("0")){
+                    int[] rightCell = new int[]{currentX,currentY+1};
+                    zeros.push(rightCell);
+                }if(currentY-1>0 && !field[currentX][currentY-1].getRevealed() &&
+                        field[currentX+1][currentY].getStatus().equals("0")){
+                    int[] leftCell = new int[]{currentX,currentY-1};
+                    zeros.push(leftCell);
+                }
+
+            }
+           // int stackSize = rows * cols;
+           // int[] stackX = new int[stackSize];
+           // int[] stackY = new int[stackSize];
+           // int first = 0;
+           // stackX[first] = x;
+           // stackY[first] = y;
+           // //loop through entire stack
+           // while (first >= 0) {
+           //     int curX = stackX[first];
+           //     int curY = stackY[first];
+           //     first--;
+           //     //checks all neighboring cells and adds empty coords to the stack and reveals zeroes
+           //     if (x >= 0 && x < rows && y + 1 >= 0 && y + 1 < cols) { //right
+           //         if (field[x][y].getStatus().equals("0")) {
+           //             first++;
+           //             stackX[first] = x;
+           //             stackY[first] = y;
+           //         } else {
+           //             field[x][y].setRevealed(true);
+           //         }
+           //     }
+           //     if (x >= 0 && x < rows && y - 1 >= 0 && y - 1 < cols) { //left
+           //         if (field[x][y].getStatus().equals("0")) {
+           //             first++;
+           //             stackX[first] = x;
+           //             stackY[first] = y;
+           //         } else {
+           //             field[x][y].setRevealed(true);
+           //         }
+           //     }
+           //     if (x + 1 >= 0 && x + 1 < rows && y >= 0 && y < cols) { //up
+           //         if (field[x][y].getStatus().equals("0")) {
+           //             first++;
+           //             stackX[first] = x;
+           //             stackY[first] = y;
+           //         } else {
+           //             field[x][y].setRevealed(true);
+           //         }
+           //     }
+           //     if (x - 1 >= 0 && x - 1 < rows && y >= 0 && y < cols) { //down
+           //         if (field[x][y].getStatus().equals("0")) {
+           //             first++;
+           //             stackX[first] = x;
+           //             stackY[first] = y;
+           //         } else {
+           //             field[x][y].setRevealed(true);
+           //         }
+           //     }
+           // }
         }
 
     /**
@@ -250,9 +281,40 @@ public class Minefield {
      * @param x     The x value the user entered.
      * @param y     The y value the user entered.
      */
-    public void revealStartingArea(int x, int y) {
+    public void revealStartingArea ( int x, int y){
+            //Create queue
+            Q1Gen<int[]> startArea = new Q1Gen<>();
+            int[] coordinates = new int[]{x,y};
+            startArea.add(coordinates);
 
-    }
+            while(startArea.length() != 0){
+                int[] newCoordinates= startArea.remove();
+                int currentX= newCoordinates[0];
+                int currentY=newCoordinates[1];
+
+                Cell currentCell = field[currentX][currentY];
+                currentCell.setRevealed(true);
+
+                if(currentCell.getStatus().equals("M"))
+                    break;
+                else{
+                    if(currentX+1< rows && !field[currentX+1][currentY].getRevealed()){
+                        int[] bottomCell = new int[]{currentX+1,currentY};
+                        startArea.add(bottomCell);
+                    }if(currentX-1> 0 && !field[currentX-1][currentY].getRevealed()){
+                        int[] topCell = new int[]{currentX-1,currentY};
+                        startArea.add(topCell);
+                    }if(currentY+1< cols && !field[currentX][currentY+1].getRevealed()){
+                        int[] rightCell = new int[]{currentX,currentY+1};
+                        startArea.add(rightCell);
+                    }if(currentY-1>0 && !field[currentX][currentY-1].getRevealed()){
+                        int[] leftCell = new int[]{currentX,currentY-1};
+                        startArea.add(leftCell);
+                    }
+                }
+            }
+
+        }
 
     /**
      * For both printing methods utilize the ANSI colour codes provided! 
