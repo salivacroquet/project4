@@ -73,49 +73,48 @@ public class Minefield {
             for(int j=0; j<rows;j++){
                 if(field[i][j].getStatus().equals("M")){
                     String oldStatus="";
-                    String newStatus="";
                     int adjacentMines=0;
                     //Check all 8 adjacent tiles and increment by one if not a mine
                     if(i+1<rows && !field[i+1][j].getStatus().equals("M")){
                         oldStatus=field[i+1][j].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
-                        newStatus=Integer.toString(adjacentMines);
+                        field[i+1][j].setStatus(Integer.toString(adjacentMines));
                     }if(i-1>0 && !field[i-1][j].getStatus().equals("M")){
                         oldStatus=field[i-1][j].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
-                        newStatus=Integer.toString(adjacentMines);
+                        field[i-1][j].setStatus(Integer.toString(adjacentMines));
                     }if(j+1<cols && !field[i][j+1].getStatus().equals("M")){
                         oldStatus=field[i][j+1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
-                        newStatus=Integer.toString(adjacentMines);
+                        field[i][j+1].setStatus(Integer.toString(adjacentMines));
                     }if(j-1>0 && !field[i][j-1].getStatus().equals("M")){
                         oldStatus=field[i][j-1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
-                        newStatus=Integer.toString(adjacentMines);
+                        field[i+1][j-1].setStatus(Integer.toString(adjacentMines));
                     }if(j-1>0 && i-1>0 && !field[i-1][j-1].getStatus().equals("M")){
                         oldStatus=field[i-1][j-1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
-                        newStatus=Integer.toString(adjacentMines);
+                        field[i-1][j-1].setStatus(Integer.toString(adjacentMines));
                     }if(j+1<cols && i-1>0 && !field[i-1][j+1].getStatus().equals("M")){
                         oldStatus=field[i-1][j+1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
-                        newStatus=Integer.toString(adjacentMines);
+                        field[i-1][j+1].setStatus(Integer.toString(adjacentMines));
                     }if(j-1>0 && i+1<rows && !field[i+1][j-1].getStatus().equals("M")){
                         oldStatus=field[i+1][j-1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
-                        newStatus=Integer.toString(adjacentMines);
+                        field[i+1][j-1].setStatus(Integer.toString(adjacentMines));
                     }if(j+1>0 && i+1<rows && !field[i+1][j+1].getStatus().equals("M")){
                         oldStatus=field[i+1][j+1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
-                        newStatus=Integer.toString(adjacentMines);
+                        field[i+1][j+1].setStatus(Integer.toString(adjacentMines));
                     }
                 }
             }
