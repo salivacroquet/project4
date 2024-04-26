@@ -1,3 +1,5 @@
+//Created by Sylvia Croatt, croat038 and Hajar Ahmed, ahme0635
+
 import java.util.Queue;
 import java.util.Random;
 
