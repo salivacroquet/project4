@@ -69,15 +69,53 @@ public class Minefield {
      * 
      */
     public void evaluateField() { //SYLVIA
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (field[i][j].getStatus().equals("*")) {
-                    for (int i = 0; i < rows; i++) {
-                        for (int j = 0; j < cols; j++) {
-                            if (!field[i][j].getStatus().equals("*")) {
-                                //needs work
-                            }
-                        }
+        for(int i=0; i<rows;i++){
+            for(int j=0; j<rows;j++){
+                if(field[i][j].getStatus().equals("M")){
+                    String oldStatus="";
+                    String newStatus="";
+                    int adjacentMines=0;
+                    //Check all 8 adjacent tiles and increment by one if not a mine
+                    if(i+1<rows && !field[i+1][j].getStatus().equals("M")){
+                        oldStatus=field[i+1][j].getStatus();
+                        adjacentMines= Integer.parseInt(oldStatus);
+                        adjacentMines++;
+                        newStatus=Integer.toString(adjacentMines);
+                    }if(i-1>0 && !field[i-1][j].getStatus().equals("M")){
+                        oldStatus=field[i-1][j].getStatus();
+                        adjacentMines= Integer.parseInt(oldStatus);
+                        adjacentMines++;
+                        newStatus=Integer.toString(adjacentMines);
+                    }if(j+1<cols && !field[i][j+1].getStatus().equals("M")){
+                        oldStatus=field[i][j+1].getStatus();
+                        adjacentMines= Integer.parseInt(oldStatus);
+                        adjacentMines++;
+                        newStatus=Integer.toString(adjacentMines);
+                    }if(j-1>0 && !field[i][j-1].getStatus().equals("M")){
+                        oldStatus=field[i][j-1].getStatus();
+                        adjacentMines= Integer.parseInt(oldStatus);
+                        adjacentMines++;
+                        newStatus=Integer.toString(adjacentMines);
+                    }if(j-1>0 && i-1>0 && !field[i-1][j-1].getStatus().equals("M")){
+                        oldStatus=field[i-1][j-1].getStatus();
+                        adjacentMines= Integer.parseInt(oldStatus);
+                        adjacentMines++;
+                        newStatus=Integer.toString(adjacentMines);
+                    }if(j+1<cols && i-1>0 && !field[i-1][j+1].getStatus().equals("M")){
+                        oldStatus=field[i-1][j+1].getStatus();
+                        adjacentMines= Integer.parseInt(oldStatus);
+                        adjacentMines++;
+                        newStatus=Integer.toString(adjacentMines);
+                    }if(j-1>0 && i+1<rows && !field[i+1][j-1].getStatus().equals("M")){
+                        oldStatus=field[i+1][j-1].getStatus();
+                        adjacentMines= Integer.parseInt(oldStatus);
+                        adjacentMines++;
+                        newStatus=Integer.toString(adjacentMines);
+                    }if(j+1>0 && i+1<rows && !field[i+1][j+1].getStatus().equals("M")){
+                        oldStatus=field[i+1][j+1].getStatus();
+                        adjacentMines= Integer.parseInt(oldStatus);
+                        adjacentMines++;
+                        newStatus=Integer.toString(adjacentMines);
                     }
                 }
             }
@@ -124,7 +162,7 @@ public class Minefield {
      * @return boolean Return false if guess did not hit mine or if flag was placed, true if mine found.
      */
     public boolean guess ( int x, int y, boolean flag){ //SYLVIA
-            if (x < rows && y < cols) {
+            if (x < rows && x>0 && y>0 && y < cols) {
                 if (flagsLeft > 0) {
                     field[x][y].setStatus("F");
                     flagsLeft--;
