@@ -6,38 +6,38 @@ public class Main{
     //main, runs through the game
     public static void main(String[] args) {
         //initialize variables
-        int rows = 0;
-        int cols = 0;
-        int mines = 0;
-        int flags = 0;
-        //set booleans
-        boolean debug=false;
-        boolean win=false;
+        int rows = 0; //number of rows
+        int cols = 0; //number of columns
+        int mines = 0; //total number of mines
+        int flags = 0; //total number of flags
+        boolean debug=false; //True if debug mode selected
+        boolean win=false; //True if the player wins
         Scanner scanner = new Scanner(System.in);
+        
         //create minefield
         Minefield minefield = null;
         //ask user for input on mode
         System.out.println("Would you like to play Easy Mode: 1, Medium Mode: 2, or Hard Mode: 3?");
-        int mode = scanner.nextInt();
+        String mode = scanner.next();
         //accounts for incorrect user input
-        while(mode!=1 && mode!=2 && mode !=3) {
+        while(!mode.equals("1") && !mode.equals("2") && !mode.equals("3") ) {
             System.out.println("Not a valid input.");
             System.out.println("Would you like to play Easy Mode: 1, Medium Mode: 2, or Hard Mode: 3?");
-            mode = scanner.nextInt();
+            mode= scanner.next();
             //sets size for each mode
         }
         //sets size of game and amount of flags and mines for each level
-        if (mode == 1) {//easy
+        if (mode.equals("1")) {//easy
             rows = 5;
             cols = 5;
             mines = 5;
             flags = 5;
-        } else if (mode == 2) {//medium
+        } else if (mode.equals("2")) {//medium
             rows = 9;
             cols = 9;
             mines = 12;
             flags = 12;
-        } else if (mode == 3) {//hard
+        } else if (mode.equals("3")) {//hard
             rows = 20;
             cols = 20;
             mines = 40;
