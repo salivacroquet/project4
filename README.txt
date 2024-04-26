@@ -9,12 +9,16 @@ Sylvia:
       -evaluateField
       -createMines
       -guess
+      -revealZeros
       
 Hajar:
   -Minefield:
       -gameOver
       -debug
       -toString
+      -revealStartingArea
+  -main:
+    -main
       
 
 How to compile and run your program:
