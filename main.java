@@ -124,6 +124,14 @@ public class main{
             }
         }
 
+        if(debug){
+            minefield.debug();
+            System.out.println(" ");
+            System.out.println(minefield);
+        }else{
+            System.out.println(minefield);
+        }
+
         System.out.println("Game Over");
         if(minefield.getWin()){
             System.out.println("You Won!");
