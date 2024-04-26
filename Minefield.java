@@ -157,7 +157,7 @@ public class Minefield {
             int unRevealed=0;
             int mines=0;
             for(int i=0; i<rows;i++){
-                for(int j=0;j<rows;j++){
+                for(int j=0;j<cols;j++){
                     //if there is a mine that has been selected they lose
                     if (field[i][j].getRevealed() && field[i][j].getStatus().equals("M"))
                         mines++;
