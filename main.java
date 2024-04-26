@@ -139,6 +139,10 @@ public class main{
             else if (choice==0) {
                 minefield.guess(x, y, false);
             }
+
+            if(!minefield.getValid()){
+                System.out.println("Invalid move, try again.");
+            }
         }
         //if debug mode is true
         if(debug){
@@ -187,3 +191,4 @@ public class main{
         return true;
     }
 }
+
