@@ -168,9 +168,10 @@ public class Minefield {
             if (flag != true) {
                 if (field[x][y].getStatus().equals("0"))
                     revealZeroes(x, y);
-                else if ((field[x][y].getStatus().equals("M")))
+                else if ((field[x][y].getStatus().equals("M"))) {
+                    field[x][y].setRevealed(true);
                     gameOver();
-                else {
+                }else{
                     field[x][y].setRevealed(true);
                 }
             }
@@ -187,6 +188,7 @@ public class Minefield {
          *
          * @return boolean Return false if game is not over and squares have yet to be revealed, otheriwse return true.
          */
+        //FIX
         public boolean gameOver () {//HAJAR
             //Loop through the array and check if there is a mine with status=revealed
             int unRevealed=0;
@@ -196,14 +198,14 @@ public class Minefield {
                     //if there is a mine that has been selected they lose
                     if (field[i][j].getRevealed() && field[i][j].getStatus().equals("M")) {
                         mines++;
-                    
+                        if (mines > 1) {
+                            win = false;
+                            return true;
+                        }
                     }
                     if(!field[i][j].getRevealed())
                         unRevealed++;
-                    if (mines > 0) {
-                    win = false;
-                    return true;
-                        }    
+
                 }
             }
 
@@ -432,8 +434,5 @@ public class Minefield {
         public boolean getWin(){
             return win;
         }
-
-        public void removeFlag(){
-
-        }
+        
 }
