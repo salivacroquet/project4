@@ -63,9 +63,8 @@ public class Main {
             }
         }
 
-        System.out.println("Game Over.");
-        //determine if user hit a mine or won
-        //need to verify debug too
+       System.out.println("Game Over.");
+            minefield.gameOver();
 
 
     }
