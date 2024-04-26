@@ -13,59 +13,90 @@ import java.util.Scanner;
  * 4. Once while loop is complete figure out how to determine if the user won or lost. Print appropriate statement.
  */
 
-public class Main {
+public class main{
     public static void main(String[] args) {
         int rows = 0;
         int cols = 0;
         int mines = 0;
         int flags = 0;
+        boolean debug=false;
+        boolean win=false;
         Scanner scanner = new Scanner(System.in);
         Minefield minefield = null;
         System.out.println("Would you like to play Easy Mode: 1, Medium Mode: 2, or Hard Mode: 3?");
         int mode = scanner.nextInt();
-        //sets size for each mode
-        if (mode == 1) {
+        while(mode!=1 && mode!=2 && mode !=3) {
+            System.out.println("Not a valid input.");
+            System.out.println("Would you like to play Easy Mode: 1, Medium Mode: 2, or Hard Mode: 3?");
+            mode = scanner.nextInt();
+        }//sets size for each mode
+        if (mode == 1) {//easy
             rows = 5;
             cols = 5;
             mines = 5;
             flags = 5;
-        } else if (mode == 2) {
+        } else if (mode == 2) {//medium
             rows = 9;
             cols = 9;
             mines = 12;
             flags = 12;
-        } else if (mode == 3) {
+        } else if (mode == 3) {//hard
             rows = 20;
             cols = 20;
             mines = 40;
             flags = 40;
-        } else {
-            System.out.println("Not a valid input.");
         }
+
         minefield = new Minefield(rows, cols, flags);
 
-        System.out.println("What is your initial pick? (x y ): ");
-        int x = scanner.nextInt();
-        int y = scanner.nextInt();
-        minefield.revealStartingArea(x, y);
-        System.out.println(minefield.toString());
+        System.out.println("Would you like to play in debug mode: yes/no");
+        String output = scanner.next();
+        while(!output.equals("yes") && !output.equals("no")){
+            System.out.println("Not a valid input.");
+            System.out.println("Would you like to play in debug mode: yes/no");
+            output = scanner.next();
 
+        }if(output.equals("yes")){
+            minefield.debug();
+            debug=true;
+        }else if(output.equals("no")){
+            System.out.println(minefield);
+            debug=false;
+        }
+
+        System.out.println("What is your first move? x,y :");
+        String input = scanner.next();
+        String[] firstMove = input.split(",");
+        while(firstMove.length!=2 && Integer.parseInt(firstMove[0])<0 &&
+                Integer.parseInt(firstMove[0])>rows &&
+                Integer.parseInt(firstMove[1])<0 &&
+                Integer.parseInt(firstMove[1])>cols){
+            System.out.println("Not a valid input.");
+            System.out.println("What is your first move? x,y :");
+            input = scanner.next();
+            firstMove = input.split(",");
+        }
+        int firstX= Integer.parseInt(firstMove[0]);
+        int firstY= Integer.parseInt(firstMove[1]);
+
+        minefield.createMines(firstX,firstY,mines);
+        minefield.evaluateField();
+        minefield.debug();
+        minefield.revealStartingArea(firstX,firstY);
+        System.out.println(" ");
         while (!minefield.gameOver()) {
-            System.out.println("Would you like to play in debug mode?: ");
-            String debugChoice = scanner.next();
-            if (debugChoice.equals("yes") || debugChoice.equals("Yes")) {
+            //print the game
+            if(debug){
                 minefield.debug();
-            } else {
-                //prints game
-                System.out.println(minefield.toString());
+            }else{
+                System.out.println(minefield);
             }
 
             //asks for input
             System.out.println("What is your move? (x y flag/reveal): ");
-            x = scanner.nextInt();
-            y = scanner.nextInt();
+            int x = scanner.nextInt();
+            int y = scanner.nextInt();
             String choice = scanner.next();
-
             if (choice.equals("flag") || choice.equals("Flag")) {
                 minefield.guess(x, y, true);
             }
@@ -75,9 +106,11 @@ public class Main {
                 System.out.println("Not a valid input.");
             }
         }
+        System.out.println("Game Over");
+        //determine if user hit a mine or won
+        //need to verify debug too
 
-        System.out.println("Game Over.");
-            minefield.gameOver();
+
     }
-}
 
+}
