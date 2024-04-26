@@ -377,6 +377,7 @@ public class Minefield {
                         }
                     }
                 }
+                board=board+"\n";
             }
 
             System.out.print(board);
@@ -434,6 +435,7 @@ public class Minefield {
                         board = board +"  -";
                     }
                 }
+                board=board+"\n";
             }
             return board;
         }
