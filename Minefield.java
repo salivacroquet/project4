@@ -277,7 +277,7 @@ public class Minefield {
                     int[] leftCell = new int[]{currentX,currentY-1};
                     zeros.push(leftCell);
                 }
-
+                field[currentX][currentY].setRevealed(true);
             }
         }
 
