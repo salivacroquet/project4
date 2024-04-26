@@ -199,8 +199,10 @@ public class Minefield {
                     //if there is a mine that has been selected they lose
                     if (field[i][j].getRevealed() && field[i][j].getStatus().equals("M"))
                         mines++;
-                        if(mines>1)
+                       if(mines>1) {
+                            System.out.println("You have lost the game :(");
                             return true;
+                        }
 
                     if(!field[i][j].getRevealed())
                         unRevealed++;
@@ -208,9 +210,10 @@ public class Minefield {
                 }
             }
 
-            if(unRevealed == totalFlags)//if unrevealed is same as number of mines
+           if(unRevealed == totalFlags) {//if unrevealed is same as number of mines
+                System.out.println("You have won the game!");
                 return true;
-
+            }
             //Check the case where there is
             return false;
         }
