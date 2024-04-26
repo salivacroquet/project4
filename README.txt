@@ -10,6 +10,8 @@ Sylvia:
       -createMines
       -guess
       -revealZeros
+  -main:
+      -main
       
 Hajar:
   -Minefield:
@@ -17,6 +19,7 @@ Hajar:
       -debug
       -toString
       -revealStartingArea
+      -reveal zeros
   -main:
     -main
       
@@ -28,11 +31,13 @@ Any assumptions:
 None that we know of.
 
 Any known bugs or defects in the program:
+None that we know of.
 
 Additional features that you implemented (if applicable):
+Not Applicable.
 
 Any outside sources (aside from course resources) consulted for ideas used in the project:
-
+-None
 
 I certify that the information contained in this README
 file is complete and accurate. I have both read and followed the course policies
