@@ -37,6 +37,7 @@ public class Minefield {
     private int flagsLeft; //keeps track of number of flags available for use
     private int totalFlags; //number of flags (equal to number of mines)
 
+
     private boolean win; //keeps track if player wins or loses
 
     /**
@@ -80,7 +81,7 @@ public class Minefield {
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
                         field[i+1][j].setStatus(Integer.toString(adjacentMines));
-                    }if(i-1>0 && !field[i-1][j].getStatus().equals("M")){
+                    }if(i-1>=0 && !field[i-1][j].getStatus().equals("M")){
                         oldStatus=field[i-1][j].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
@@ -90,22 +91,22 @@ public class Minefield {
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
                         field[i][j+1].setStatus(Integer.toString(adjacentMines));
-                    }if(j-1>0 && !field[i][j-1].getStatus().equals("M")){
+                    }if(j-1>=0 && !field[i][j-1].getStatus().equals("M")){
                         oldStatus=field[i][j-1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
                         field[i][j-1].setStatus(Integer.toString(adjacentMines));
-                    }if(j-1>0 && i-1>0 && !field[i-1][j-1].getStatus().equals("M")){
+                    }if(j-1>=0 && i-1>=0 && !field[i-1][j-1].getStatus().equals("M")){
                         oldStatus=field[i-1][j-1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
                         field[i-1][j-1].setStatus(Integer.toString(adjacentMines));
-                    }if(j+1<cols && i-1>0 && !field[i-1][j+1].getStatus().equals("M")){
+                    }if(j+1<cols && i-1>=0 && !field[i-1][j+1].getStatus().equals("M")){
                         oldStatus=field[i-1][j+1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
                         field[i-1][j+1].setStatus(Integer.toString(adjacentMines));
-                    }if(j-1>0 && i+1<rows && !field[i+1][j-1].getStatus().equals("M")){
+                    }if(j-1>=0 && i+1<rows && !field[i+1][j-1].getStatus().equals("M")){
                         oldStatus=field[i+1][j-1].getStatus();
                         adjacentMines= Integer.parseInt(oldStatus);
                         adjacentMines++;
@@ -160,45 +161,22 @@ public class Minefield {
          * @return boolean Return false if guess did not hit mine or if flag was placed, true if mine found.
          */
         public boolean guess ( int x, int y, boolean flag){ //SYLVIA
-         if (x < rows && x>=0 && y>=0 && y < cols) {
-            if (flag == true) {
-                if (flagsLeft > 0) {
-                    field[x][y].setStatus("F");
-                    flagsLeft--;
-                    return false;
-                }
-                if (field[x][y].getStatus().equals("F")) {
-                    System.out.println("Already a flag there");
-                    return false;
-                }
-                if (field[x][y].getRevealed()) {
-                    System.out.println("Cell already revealed");
-                    return false;
-                } else {
-                    System.out.println("No flags left");
-                }
-
-            } else {
-                if (field[x][y].getRevealed()) {
-                    System.out.println("Cell already revealed");
-                    return false;
-                }
-                if (field[x][y].getStatus().equals("*")) {
-                    gameOver();
-                    return true;
-                }
-                else if (field[x][y].getStatus().equals("0")) {
+            if (flagsLeft > 0 && flag && !field[x][y].getRevealed()) {
+                field[x][y].setStatus("F");
+                flagsLeft--;
+            }
+            if (flag != true) {
+                if (field[x][y].getStatus().equals("0"))
                     revealZeroes(x, y);
-                }
+                else if ((field[x][y].getStatus().equals("M")))
+                    gameOver();
                 else {
                     field[x][y].setRevealed(true);
                 }
-                return false;
-
             }
+            return true;
         }
-        return false;
-    }
+
 
         /**
          * gameOver
@@ -264,16 +242,16 @@ public class Minefield {
                         field[currentX+1][currentY].getStatus().equals("0")){
                     int[] bottomCell = new int[]{currentX+1,currentY};
                     zeros.push(bottomCell);
-                }if(currentX-1> 0 && !field[currentX-1][currentY].getRevealed() &&
-                        field[currentX+1][currentY].getStatus().equals("0")){
+                }if(currentX-1>= 0 && !field[currentX-1][currentY].getRevealed() &&
+                        field[currentX-1][currentY].getStatus().equals("0")){
                     int[] topCell = new int[]{currentX-1,currentY};
                     zeros.push(topCell);
                 }if(currentY+1< cols && !field[currentX][currentY+1].getRevealed() &&
-                        field[currentX+1][currentY].getStatus().equals("0")){
+                        field[currentX][currentY+1].getStatus().equals("0")){
                     int[] rightCell = new int[]{currentX,currentY+1};
                     zeros.push(rightCell);
-                }if(currentY-1>0 && !field[currentX][currentY-1].getRevealed() &&
-                        field[currentX+1][currentY].getStatus().equals("0")){
+                }if(currentY-1>=0 && !field[currentX][currentY-1].getRevealed() &&
+                        field[currentX][currentY-1].getStatus().equals("0")){
                     int[] leftCell = new int[]{currentX,currentY-1};
                     zeros.push(leftCell);
                 }
@@ -314,13 +292,13 @@ public class Minefield {
                     if(currentX+1< rows && !field[currentX+1][currentY].getRevealed()){
                         int[] bottomCell = new int[]{currentX+1,currentY};
                         startArea.add(bottomCell);
-                    }if(currentX-1> 0 && !field[currentX-1][currentY].getRevealed()){
+                    }if(currentX-1>= 0 && !field[currentX-1][currentY].getRevealed()){
                         int[] topCell = new int[]{currentX-1,currentY};
                         startArea.add(topCell);
                     }if(currentY+1< cols && !field[currentX][currentY+1].getRevealed()){
                         int[] rightCell = new int[]{currentX,currentY+1};
                         startArea.add(rightCell);
-                    }if(currentY-1>0 && !field[currentX][currentY-1].getRevealed()){
+                    }if(currentY-1>=0 && !field[currentX][currentY-1].getRevealed()){
                         int[] leftCell = new int[]{currentX,currentY-1};
                         startArea.add(leftCell);
                     }
@@ -407,7 +385,7 @@ public class Minefield {
                 for(int j=0;j<cols;j++){
                     if(j==0)
                         board = board+"  "+i;
-                    if (field[i][j].getRevealed()){
+                    if (field[i][j].getRevealed()|| field[i][j].getStatus()=="F"){
                         switch(field[i][j].getStatus()){
                             case "M":
                                 board = board+"  "+ ANSI_RED_BRIGHT+ "M"+ANSI_GREY_BACKGROUND;
@@ -436,11 +414,12 @@ public class Minefield {
                             case "8":
                                 board = board+"  "+ ANSI_RED+ "8"+ANSI_GREY_BACKGROUND;
                                 break;
+                            case "F":
+                                board = board+"  "+ ANSI_GREEN +"F"+ANSI_GREY_BACKGROUND;
+                                break;
                             default:
                                 board = board+"  "+ ANSI_GREEN+ "0"+ANSI_GREY_BACKGROUND;
                         }
-                    }else if(field[i][j].getStatus().equals("F")){
-                        board = board+"  F";
                     } else{
                         board = board +"  -";
                     }
@@ -452,5 +431,9 @@ public class Minefield {
 
         public boolean getWin(){
             return win;
+        }
+
+        public void removeFlag(){
+
         }
 }
