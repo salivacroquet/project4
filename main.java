@@ -45,8 +45,30 @@ public class Main {
         minefield = new Minefield(rows, cols, flags);
 
         while (!minefield.gameOver()) {
+            //prints game
             System.out.println(minefield);
+            //asks for input
+            System.out.println("What is your move? (x y flag/reveal): ");
+            int x = scanner.nextInt();
+            int y = scanner.nextInt();
+            String choice = scanner.next();
+
+            if (choice.equals("flag") || choice.equals("Flag")) {
+                minefield.guess(x, y, true);
+            }
+            else if (choice.equals("reveal") || choice.equals("Reveal")) {
+                minefield.guess(x, y, false);
+            } else {
+                System.out.println("Not a valid input.");
+            }
         }
+
+        System.out.println("Game Over.");
+        //determine if user hit a mine or won
+
+
+    }
+}
 
     }
 }
