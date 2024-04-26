@@ -326,6 +326,10 @@ public class Minefield {
      * @param y     The y value the user entered.
      */
     public void revealStartingArea ( int x, int y){
+        if (x < 0 || x >= rows || y < 0 || y >= cols) {
+            System.out.println("Invalid coordinates.");
+            return;
+        }
             //Create queue
             Q1Gen<int[]> startArea = new Q1Gen<>();
             int[] coordinates = new int[]{x,y};
