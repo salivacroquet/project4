@@ -28,10 +28,9 @@ Hajar:
 How to compile and run your program:
 The program can compile and run in the terminal or through inteliJ. 
 
-Any assumptions:
+Any assumptions/Notes:
 -Note that we DO NOT allow the player to remove flags, once they have flagged a space it
- will stay flagged for the entire game. So if they flag something that is not a mine they automatically lose.
--we assume the user does NOT select an already revealed location
+ will stay flagged for the entire game.
 
 Any known bugs or defects in the program:
 -sometimes revealZeros does NOT reveal all the zeros that should be revealed
