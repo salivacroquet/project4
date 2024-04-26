@@ -298,9 +298,10 @@ public class Minefield {
                 Cell currentCell = field[currentX][currentY];
                 currentCell.setRevealed(true);
 
-                if(currentCell.getStatus().equals("M"))
+                if(currentCell.getStatus().equals("M")){
+                    flagsLeft--;
                     break;
-                else{
+                }else{
                     if(currentX+1< rows && !field[currentX+1][currentY].getRevealed()){
                         int[] bottomCell = new int[]{currentX+1,currentY};
                         startArea.add(bottomCell);
