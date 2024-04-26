@@ -34,9 +34,11 @@ Any assumptions/Notes:
 
 Any known bugs or defects in the program:
 -sometimes revealZeros does NOT reveal all the zeros that should be revealed
+-formatting is strange for Hard mode
 
 Additional features that you implemented (if applicable):
-Added a Helper function in main checkInput() that checks if an input is valid (i.e. it is inbounds, a number, and the correct format)
+-Added a Helper function in main checkInput() that checks if an input is valid (i.e. it is inbounds, a number, and the correct format).
+-Added getters for two variables in minefield, win:a boolean that is true if the player wins, valid: a boolean that is true if the move made is valid.
 
 Any outside sources (aside from course resources) consulted for ideas used in the project:
 -NumberFormatException: https://stackoverflow.com/questions/19149784/java-java-lang-numberformatexception
